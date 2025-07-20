@@ -1,101 +1,80 @@
-import "./Register.css";
-// import { useRef } from "react";
 import { useState } from "react";
-import { Link,useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+
 export default function Register() {
   const [user, setUser] = useState({});
   const [error, setError] = useState();
-  const Navigate = useNavigate()
-  const API_URL = import.meta.env.VITE_API_URL
-  const handleSubmit = async () => {
+  const navigate = useNavigate();
+  const API_URL = import.meta.env.VITE_API_URL;
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     try {
       const url = `${API_URL}/api/users/register`;
-      const result = await axios.post(url, user);
-      setError("Data saved successfully");
-      Navigate("/login")
+      await axios.post(url, user);
+      setError("✅ Registration successful!");
+      navigate("/login");
     } catch (err) {
-      console.log(err);
-      setError("Something went wrong");
+      console.log(err.response?.data || err.message);
+      setError("❌ Something went wrong. Try again.");
     }
   };
+
   return (
-    <div className="App-Register-Row">
-      <div style={{ backgroundColor: "white" }}>
-        <h2>Registration Form</h2>
-        {error}
-        <p>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-100 to-purple-200 p-6">
+      <div className="bg-white shadow-2xl rounded-xl p-8 max-w-md w-full">
+        <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">Registration Form</h2>
+
+        {error && (
+          <div className="mb-4 text-sm text-center text-red-600 bg-red-100 px-3 py-2 rounded-md">
+            {error}
+          </div>
+        )}
+
+        <form onSubmit={handleSubmit} className="space-y-4">
           <input
             type="text"
-            onChange={(e) => setUser({ ...user, firstName: e.target.value })}
             placeholder="Enter First Name"
+            onChange={(e) => setUser({ ...user, firstName: e.target.value })}
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400"
           />
-        </p>
-        <p>
           <input
             type="text"
             placeholder="Enter Last Name"
             onChange={(e) => setUser({ ...user, lastName: e.target.value })}
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400"
           />
-        </p>
-        <p>
           <input
-            type="text"
+            type="email"
             placeholder="Enter Email Address"
             onChange={(e) => setUser({ ...user, email: e.target.value })}
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400"
           />
-        </p>
-        <p>
           <input
             type="password"
             placeholder="Enter Password"
             onChange={(e) => setUser({ ...user, password: e.target.value })}
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400"
           />
+
+          <button
+            type="submit"
+            className="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-200"
+          >
+            Submit
+          </button>
+        </form>
+
+        <hr className="my-6" />
+
+        <p className="text-center text-sm text-gray-600">
+          Already a member?{" "}
+          <Link to="/login" className="text-purple-600 hover:underline font-medium">
+            Login here
+          </Link>
         </p>
-        <p>
-          <button onClick={handleSubmit}>Submit</button>
-        </p>
-        <hr />
-      <Link to="/login">Already a member? Login Here...</Link>
       </div>
     </div>
   );
 }
-
-// export default function Register() {
-//   const firstName = useRef();
-//   const lastName = useRef();
-//   const email = useRef();
-//   const password = useRef();
-//   const handleSubmit = () => {
-//     const user = {
-//       firstName: firstName.current.value,
-//       lastName: lastName.current.value,
-//       email: email.current.value,
-//       password: password.current.value,
-//     };
-//     console.log(user);
-//   };
-//   return (
-//     <div className="App-Register-Row">
-//       <div style={{ backgroundColor: "white" }}>
-//         <h2>Registration Form</h2>
-//         <p>
-//           <input type="text" placeholder="Enter First Name" ref={firstName} />
-//         </p>
-//         <p>
-//           <input type="text" placeholder="Enter Last Name" ref={lastName} />
-//         </p>
-//         <p>
-//           <input type="text" placeholder="Enter Email Address" ref={email} />
-//         </p>
-//         <p>
-//           <input type="password" placeholder="Enter Password" ref={password} />
-//         </p>
-//         <p>
-//           <button onClick={handleSubmit}>Submit</button>
-//         </p>
-//       </div>
-//     </div>
-//   );
-// }
