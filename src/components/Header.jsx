@@ -10,7 +10,7 @@ export default function Header() {
     <header className="bg-slate-800 text-white shadow-md sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
         <h1 className="text-2xl font-bold text-teal-300 hover:text-teal-200 transition duration-300">
-          🌐 MERN Frontend
+          🌐 YourCart
         </h1>
 
         <nav className="flex space-x-6 text-lg">

@@ -8,7 +8,7 @@ export default function Footer() {
           <h3 className="text-xl font-bold text-blue-400">
             © {new Date().getFullYear()} Garv Gakkhar
           </h3>
-          <p className="text-sm text-gray-300">All rights reserved. Powered by MERN Stack 🔥</p>
+          <p className="text-sm text-gray-300">All rights reserved. Powered by Garv Gakkhar 🔥</p>
         </div>
         <div className="flex space-x-4 text-gray-300">
           <a href="#" className="hover:text-blue-300 transition">Privacy</a>
